@@ -15,14 +15,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
-public class JwkTokenGenerator {
+public class JwtTokenGenerator {
 
     private final JwtEncoder jwtEncoder;
 
     @Value("${jwt.key-id}")
     private String keyId;
 
-    public JwkTokenGenerator(JwtEncoder jwtEncoder) {
+    public JwtTokenGenerator(JwtEncoder jwtEncoder) {
         this.jwtEncoder = jwtEncoder;
     }
 
