@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping
     public UserResponse getUser(Authentication authentication) {
-        String username = authentication.getName();
+        String subject = authentication.getName();
         List<String> roles = authentication.getAuthorities().stream()
                 .filter(role -> role.getAuthority().startsWith("ROLE_"))
                 .map(role -> role.getAuthority().substring(5))
@@ -29,6 +29,6 @@ public class UserController {
             roles = List.of("USER");
         }
 
-        return new UserResponse(username, roles);
+        return new UserResponse(subject, roles);
     }
 }
