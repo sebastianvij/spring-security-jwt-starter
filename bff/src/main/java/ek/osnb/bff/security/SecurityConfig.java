@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +20,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.proc.SecurityContext;
+
 
 @Configuration
 @EnableMethodSecurity
@@ -79,9 +80,9 @@ public class SecurityConfig {
 
     @Bean
     JwtEncoder jwtEncoder(RsaKeyProperties rsaKeyProperties) {
-        JWK jwk = new RSAKey.builder(rsaKeyProperties.publicKey())
+        JWK jwk = new RSAKey.Builder(rsaKeyProperties.publicKey())
                 .privateKey(rsaKeyProperties.privateKey())
-                .keyId("my-key-id")
+                .keyID("my-key-id")
                 .build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);

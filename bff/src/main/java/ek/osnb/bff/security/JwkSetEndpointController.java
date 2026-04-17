@@ -7,8 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.PublicKey;
-import java.security.interfaces.RSAKey;
+import com.nimbusds.jose.jwk.RSAKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Map;
 
@@ -24,8 +23,8 @@ class JwkSetEndpointController {
     public ResponseEntity<Map<String, Object>> jwks() {
         RSAPublicKey publicKey = rsaKeyProperties.publicKey();
 
-        RSAKey rsaKey = new RSAKey.builder(publicKey)
-                .keyId("my-key-id")
+        RSAKey rsaKey = new RSAKey.Builder(publicKey)
+                .keyID("my-key-id")
                 .algorithm(JWSAlgorithm.RS256)
                 .keyUse(KeyUse.SIGNATURE)
                 .build();
